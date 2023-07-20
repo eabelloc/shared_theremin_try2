@@ -6,6 +6,7 @@ let setVolume2;
 let selectType, bgColor;
 let fft;
 let socket;
+let otherUserWaveform = [];
 
 // myOscillator.amp(0.1);
 
@@ -57,9 +58,7 @@ function setup() {
   
   /*FFT FOR WAVEFORM*/
   fft = new p5.FFT();
-  
   bgColor = color(100);
-  
   noStroke();
 
   // Connect to the Socket.IO server
@@ -67,7 +66,7 @@ function setup() {
   
   // Listen for waveform data from the server and update the local canvas
   socket.on('waveformData', (data) => {
-    drawWaveform(data.waveform);
+    otherUserWaveform = data.waveform;
   });
 
   // Send initial waveform data to the server
@@ -123,6 +122,8 @@ function draw() {
   socket.emit('oscillatorData', data);
 
   sendWaveformData();
+  // Only draw the other user's waveform on the canvas
+  drawWaveform(otherUserWaveform);
   
 }
 

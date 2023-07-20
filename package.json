@@ -1,0 +1,24 @@
+{
+  "name": "shared_theremin_try2",
+  "version": "1.0.0",
+  "description": "Shared theremin using p5.js and socket.io",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eabelloc/shared_theremin_try2.git"
+  },
+  "author": "Elias Bello",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eabelloc/shared_theremin_try2/issues"
+  },
+  "homepage": "https://github.com/eabelloc/shared_theremin_try2#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.1"
+  }
+}

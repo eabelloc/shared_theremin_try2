@@ -1,0 +1,123 @@
+/* style.css */
+:root {
+  --background: #f2f7f5;
+  --primary: #00473e;
+  --secondary: #048170
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: var(--background);
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+  }
+
+  header nav {
+    height: 10vh;
+    background-color: var(--background);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+  }
+  
+  header nav ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    list-style-position: inside
+  }
+
+  header {
+    border-bottom: #00473e bold;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--primary);
+    transition: all 0.2s ease-in-out;
+  }
+  
+  li {
+    list-style-type: none;
+    color: var(--primary);
+    padding-left: 0;
+    margin-left: 0;
+  }
+
+  h1 {
+    font-size: 30px;
+    color: var(--primary);
+  }
+
+  h2 {
+    font-size: 25px;
+    color: var(--primary);
+  }
+
+  .first_list_anchor {
+    font-size: 20px;
+  }
+
+    header nav ul li {
+    font-weight: bold;
+    transition: all 0.4s ease-in-out;
+  }
+
+  header nav ul li:hover {
+    color: var(--secondary);
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+  
+  footer {
+    height: 10vh;
+    background-color: var(--background);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding-top: 10px;
+  }
+
+  footer h2 a {
+    font-weight: bold;
+    transition: all 0.4s ease-in-out;
+  }
+
+  footer h2 a:hover {
+    color: var(--secondary);
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+
+  main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+  }
+  
+  #canvas {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  

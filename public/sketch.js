@@ -12,7 +12,7 @@ let audioContextStarted = false;
 // myOscillator.amp(0.1);
 
 function setup() {
-  createCanvas(1000, 550);
+  createCanvas(900, 480);
   
   /*OSCILLATOR 1*/  
   /*Select oscillator type*/
@@ -21,14 +21,14 @@ function setup() {
   
   osc1 = new p5.Oscillator();
   selectType1 = createSelect();
-  selectType1.position(30, 560);
+  selectType1.position(630, 620);
   selectType1.option('sine');
   selectType1.option('triangle');
   selectType1.option('sawtooth');
   selectType1.option('square');
   selectType1.changed(updateOscillatorType1);
   
-  setVolume1 = createSlider(0, 1, 0.1, 0).position(30, 580);
+  setVolume1 = createSlider(0, 1, 0.1, 0).position(630, 640);
   setVolume1.input(updateOscillatorVolume1);
   
   /*OSCILLATOR 2*/
@@ -38,14 +38,14 @@ function setup() {
   
   osc2 = new p5.Oscillator();
   selectType2 = createSelect();
-  selectType2.position(200, 560);
+  selectType2.position(780, 620);
   selectType2.option('sine');
   selectType2.option('triangle');
   selectType2.option('sawtooth');
   selectType2.option('square');
   selectType2.changed(updateOscillatorType2);
   
-  setVolume2 = createSlider(0, 1, 0.1, 0).position(200, 580);
+  setVolume2 = createSlider(0, 1, 0.1, 0).position(780, 640);
   setVolume2.input(updateOscillatorVolume2);
   
   
@@ -98,17 +98,19 @@ function sendWaveformData() {
 }
 
 function draw() { 
-  
+
+ // Check if the mouse is inside the canvas
+ if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
+  // Calculate the background color based on the mouse position
+  let r = map(mouseX, 0, width, 0, 255);
+  let g = map(mouseY, 0, height, 0, 255);
+  let b = map(mouseX + mouseY, 0, width + height, 255, 0);
+
+  bgColor = color(r, g, b);
+
+  // Set the background color
   background(bgColor);
-  if(osc1.getType() == 'sine') {
-    bgColor = color(64, 224, 208)
-  } if (osc1.getType() == 'triangle') {
-    bgColor = color(34, 139, 34)
-  } if (osc1.getType() == 'sawtooth') {
-    bgColor = color(255,105,180)
-  } if (osc1.getType() == 'square') {
-    bgColor = color(91,51, 255)
-  }
+}
   
   /*Wave Shape*/
   let myWaveform = fft.waveform();

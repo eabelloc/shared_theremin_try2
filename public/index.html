@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Shared Oscillator</title>
+    <title>Shared Theremin</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/addons/p5.sound.min.js"></script>
     <!-- Add the Socket.IO library -->
@@ -9,12 +9,26 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="data:,">
+    <link rel="icon" type="image/x-icon" href="./assets/theremin1.png">
 
   </head>
   <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a class="first_list_anchor" href="https://p5js.org" target="_blank">p5.js</a></li>
+          <li><a class="first_list_anchor" href="https://socket.io/" target="_blank">socket.io</a></li>
+          <li><a class="first_list_anchor" href="https://github.com/eabelloc/shared_theremin_try2.git" target="_blank">GitHub</a></li>
+        </ul>
+      </nav>
+    </header>
     <main>
+      <h1>Shared Theremin</h1>
+      <canvas id="canvas"></canvas>
     </main>
+    <footer>
+      <h2>Made by <a href="https://github.com/eabelloc" target="_blank">@eabelloc</a></h2>
+    </footer>
     <script src="sketch.js"></script>
   </body>
 </html>

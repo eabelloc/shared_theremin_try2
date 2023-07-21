@@ -12,4 +12,6 @@ This is part of the Sound Art workshop for the Browser Sound Festival
 
 # Thnings to improve
 
-TODO: Maybe add some CSS might not be so bad xD
+1.- TODO: Maybe add some CSS might not be so bad xD (done)
+
+2.- TODO: Adapt it to tablet and mobile, in other words, work the responsive part xD

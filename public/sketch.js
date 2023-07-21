@@ -3,10 +3,11 @@ let osc1;
 let osc2;
 let setVolume1;
 let setVolume2;
-let selectType, bgColor;
+let selectType1, selectType2, bgColor;
 let fft;
 let socket;
 let otherUserWaveform = [];
+let audioContextStarted = false;
 
 // myOscillator.amp(0.1);
 
@@ -18,42 +19,34 @@ function setup() {
   
   osc1 = new p5.Oscillator()
   
-  selectType = createSelect();
-  selectType.position(30, 560);
-  selectType.option('sine');
-  selectType.option('triangle');
-  selectType.option('sawtooth');
-  selectType.option('square');
-  selectType.changed(function () {
-    osc1.setType(selectType.value());
-    fill(selectType.value());
-  });
+  osc1 = new p5.Oscillator();
+  selectType1 = createSelect();
+  selectType1.position(30, 560);
+  selectType1.option('sine');
+  selectType1.option('triangle');
+  selectType1.option('sawtooth');
+  selectType1.option('square');
+  selectType1.changed(updateOscillatorType1);
   
   setVolume1 = createSlider(0, 1, 0.1, 0).position(30, 580);
-  setVolume1.input(function () {
-    osc1.amp(setVolume1.value(), 0.01)
-  });
+  setVolume1.input(updateOscillatorVolume1);
   
   /*OSCILLATOR 2*/
   /*Select oscillator type*/
   
   osc2 = new p5.Oscillator()
   
-  selectType = createSelect();
-  selectType.position(200, 560);
-  selectType.option('sine');
-  selectType.option('triangle');
-  selectType.option('sawtooth');
-  selectType.option('square');
-  selectType.changed(function () {
-    osc2.setType(selectType.value());
-    fill(selectType.value());
-  });
+  osc2 = new p5.Oscillator();
+  selectType2 = createSelect();
+  selectType2.position(200, 560);
+  selectType2.option('sine');
+  selectType2.option('triangle');
+  selectType2.option('sawtooth');
+  selectType2.option('square');
+  selectType2.changed(updateOscillatorType2);
   
   setVolume2 = createSlider(0, 1, 0.1, 0).position(200, 580);
-  setVolume2.input(function () {
-    osc2.amp(setVolume1.value(), 0.01)
-  });
+  setVolume2.input(updateOscillatorVolume2);
   
   
   /*FFT FOR WAVEFORM*/
@@ -71,6 +64,30 @@ function setup() {
 
   // Send initial waveform data to the server
   sendWaveformData();
+}
+
+function updateOscillatorType1() {
+  const oscillatorType = selectType1.value();
+  osc1.setType(oscillatorType);
+  sendWaveformData(); // Send the updated data to the server
+}
+
+function updateOscillatorVolume1() {
+  const volume = setVolume1.value();
+  osc1.amp(volume, 0.01);
+  sendWaveformData(); // Send the updated data to the server
+}
+
+function updateOscillatorType2() {
+  const oscillatorType = selectType2.value();
+  osc2.setType(oscillatorType);
+  sendWaveformData(); // Send the updated data to the server
+}
+
+function updateOscillatorVolume2() {
+  const volume = setVolume2.value();
+  osc2.amp(volume, 0.01);
+  sendWaveformData(); // Send the updated data to the server
 }
 
 // Function to send waveform data to the server
@@ -124,22 +141,10 @@ function draw() {
   sendWaveformData();
   // Only draw the other user's waveform on the canvas
   drawWaveform(otherUserWaveform);
-  
 }
 
 function drawWaveform(waveform) {
   // Draw the waveform on the canvas
-  background(bgColor);
-  if (osc1.getType() == 'sine') {
-    bgColor = color(64, 224, 208);
-  } else if (osc1.getType() == 'triangle') {
-    bgColor = color(34, 139, 34);
-  } else if (osc1.getType() == 'sawtooth') {
-    bgColor = color(255, 105, 180);
-  } else if (osc1.getType() == 'square') {
-    bgColor = color(91, 51, 255);
-  }
-
   beginShape();
   strokeWeight(5);
   for (let i = 0; i < waveform.length; i++) {
@@ -150,18 +155,48 @@ function drawWaveform(waveform) {
   endShape();
 }
 
-function touchStarted() {
-  if (getAudioContext().state !== 'running') {
-    getAudioContext().resume(); // Corrected the function call here
+
+function mousePressedInsideCanvas() {
+  if (document.activeElement === document.querySelector('canvas')) {
+    if (!audioContextStarted) {
+      getAudioContext().resume().then(() => {
+        console.log('Audio context started.');
+        audioContextStarted = true;
+        osc1.start();
+        osc2.start();
+      });
+    }
   }
 }
 
 function mousePressed() {
-  osc1.start();
-  osc2.start();
+  if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
+    // Inside the canvas, start the oscillators
+    if (!audioContextStarted) {
+      getAudioContext().resume().then(() => {
+        console.log('Audio context started.');
+        audioContextStarted = true;
+        osc1.start();
+        osc2.start();
+      });
+    }
+  }
 }
 
 function mouseReleased() {
-  osc1.stop();
-  osc2.stop();
+  if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
+    // Inside the canvas, stop the oscillators
+    if (audioContextStarted) {
+      osc1.stop();
+      osc2.stop();
+      audioContextStarted = false; // Reset the audio context flag
+    }
+  }
 }
+
+function touchStarted() {
+  if (getAudioContext().state !== 'running') {
+    getAudioContext().resume();
+  }
+}
+

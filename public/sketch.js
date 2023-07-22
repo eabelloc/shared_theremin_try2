@@ -28,6 +28,7 @@ function setup() {
   selectType1.option('square');
   selectType1.changed(updateOscillatorType1);
   
+  /*Set oscillator volume*/  
   setVolume1 = createSlider(0, 1, 0.1, 0).position(630, 640);
   setVolume1.input(updateOscillatorVolume1);
   
@@ -44,13 +45,16 @@ function setup() {
   selectType2.option('sawtooth');
   selectType2.option('square');
   selectType2.changed(updateOscillatorType2);
-  
+
+  /*Set oscillator volume*/  
   setVolume2 = createSlider(0, 1, 0.1, 0).position(780, 640);
   setVolume2.input(updateOscillatorVolume2);
   
   
   /*FFT FOR WAVEFORM*/
   fft = new p5.FFT();
+
+  /*Default background color*/
   bgColor = color(100);
   noStroke();
 

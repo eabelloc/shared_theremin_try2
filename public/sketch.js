@@ -1,4 +1,4 @@
-/*Oscillator Method*/
+/*SHARED OSCILLATOR*/
 let osc1;
 let osc2;
 let setVolume1;

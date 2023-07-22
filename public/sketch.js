@@ -54,43 +54,43 @@ function setup() {
   bgColor = color(100);
   noStroke();
 
-  // Connect to the Socket.IO server
+  /*Connect to the Socket.IO server*/
   socket = io.connect();
   
-  // Listen for waveform data from the server and update the local canvas
+  /*Listen for waveform data from the server and update the local canvas*/
   socket.on('waveformData', (data) => {
     otherUserWaveform = data.waveform;
   });
 
-  // Send initial waveform data to the server
+  /*Send initial waveform data to the server*/
   sendWaveformData();
 }
 
 function updateOscillatorType1() {
   const oscillatorType = selectType1.value();
   osc1.setType(oscillatorType);
-  sendWaveformData(); // Send the updated data to the server
+  sendWaveformData(); /*Send the updated data to the server*/
 }
 
 function updateOscillatorVolume1() {
   const volume = setVolume1.value();
   osc1.amp(volume, 0.01);
-  sendWaveformData(); // Send the updated data to the server
+  sendWaveformData(); /*Send the updated data to the server*/
 }
 
 function updateOscillatorType2() {
   const oscillatorType = selectType2.value();
   osc2.setType(oscillatorType);
-  sendWaveformData(); // Send the updated data to the server
+  sendWaveformData(); /*Send the updated data to the server*/
 }
 
 function updateOscillatorVolume2() {
   const volume = setVolume2.value();
   osc2.amp(volume, 0.01);
-  sendWaveformData(); // Send the updated data to the server
+  sendWaveformData(); /*Send the updated data to the server*/
 }
 
-// Function to send waveform data to the server
+/*Function to send waveform data to the server*/
 function sendWaveformData() {
   const waveform = fft.waveform();
   const data = { waveform };
@@ -99,20 +99,20 @@ function sendWaveformData() {
 
 function draw() { 
 
- // Check if the mouse is inside the canvas
+ /*Check if the mouse is inside the canvas*/
  if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
-  // Calculate the background color based on the mouse position
-  let r = map(mouseX, 0, width, 0, 255);
-  let g = map(mouseY, 0, height, 0, 255);
-  let b = map(mouseX + mouseY, 0, width + height, 255, 0);
+    /*Calculate the background color based on the mouse position*/
+    let r = map(mouseX, 0, width, 0, 255);
+    let g = map(mouseY, 0, height, 0, 255);
+    let b = map(mouseX + mouseY, 0, width + height, 255, 0);
 
-  bgColor = color(r, g, b);
+    bgColor = color(r, g, b);
 
-  // Set the background color
-  background(bgColor);
-}
+    /*Set the background color*/
+    background(bgColor);
+  }
   
-  /*Wave Shape*/
+  /*WAVE SHAPE*/
   let myWaveform = fft.waveform();
   beginShape();
   strokeWeight(5);
@@ -129,6 +129,7 @@ function draw() {
   osc1.freq(osc1Freq);
   
   /*OSCILLATOR 2*/
+  /*change oscillator frequency based on the coordinates of mouseY*/
   let osc2Freq = map(mouseY, 0, width, 180, 880);
   osc2.freq(osc2Freq);
 
@@ -141,12 +142,12 @@ function draw() {
   socket.emit('oscillatorData', data);
 
   sendWaveformData();
-  // Only draw the other user's waveform on the canvas
+  /*Only draw the other user's waveform on the canvas*/
   drawWaveform(otherUserWaveform);
 }
 
 function drawWaveform(waveform) {
-  // Draw the waveform on the canvas
+  /*Draw the waveform on the canvas*/
   beginShape();
   strokeWeight(5);
   for (let i = 0; i < waveform.length; i++) {
@@ -173,7 +174,7 @@ function mousePressedInsideCanvas() {
 
 function mousePressed() {
   if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
-    // Inside the canvas, start the oscillators
+    /*Inside the canvas, start the oscillators*/
     if (!audioContextStarted) {
       getAudioContext().resume().then(() => {
         console.log('Audio context started.');
@@ -187,11 +188,11 @@ function mousePressed() {
 
 function mouseReleased() {
   if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
-    // Inside the canvas, stop the oscillators
+    /*Inside the canvas, stop the oscillators*/
     if (audioContextStarted) {
       osc1.stop();
       osc2.stop();
-      audioContextStarted = false; // Reset the audio context flag
+      audioContextStarted = false; /*Reset the audio context flag*/
     }
   }
 }

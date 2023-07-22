@@ -11,7 +11,8 @@ app.use(express.static('public'));
 io.on('connection', (socket) => {
   console.log('A user connected.');
 
-  /*Listen for waveform data from the clients and broadcast it to all connected clients*/
+  /*Listens for the waveform data from the clients(other users)
+   and broadcast it to all connected clients*/
   socket.on('waveformData', (data) => {
     io.emit('waveformData', data);
   });
